@@ -71,7 +71,7 @@ const SwipeToShow: React.FC<Props> = ({
 			}
 		}
 	}
-
+	
 	const viewportWidth = window.innerWidth;
 	const viewportHeight = window.innerHeight;
 	const smallerDimension = Math.min(viewportWidth, viewportHeight);
