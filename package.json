@@ -1,0 +1,42 @@
+{
+  "name": "react-swipe-to-show",
+  "version": "1.0.0",
+  "description": "Styled swipeable component using react-swipeable for gesture detection, allowing full customization and styling of swiping component and revealed menu",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup index.tsx --format cjs,esm --dts",
+    "lint": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elliasc04/react-swipe-to-show.git"
+  },
+  "keywords": [
+    "swipe",
+    "to",
+    "show",
+    "reveal",
+    "actions",
+    "buttons",
+    "menu",
+    "drag"
+  ],
+  "author": "Ethan Guo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elliasc04/react-swipe-to-show/issues"
+  },
+  "homepage": "https://github.com/elliasc04/react-swipe-to-show#readme",
+  "dependencies": {
+    "@changesets/cli": "^2.27.1",
+    "react-swipeable": "^7.0.1",
+    "tsup": "^8.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.11",
+    "@types/react": "^18.3.1",
+    "typescript": "^5.4.5"
+  }
+}
