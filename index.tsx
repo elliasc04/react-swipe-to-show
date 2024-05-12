@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import "./dist/styles.css";
+import "./styles.css";
 
 import React, { CSSProperties, ReactNode, useEffect, useId, useRef, useState } from "react";
 import { useSwipeable } from "react-swipeable";
@@ -104,7 +104,7 @@ const SwipeToShow: React.FC<Props> = ({
 	return (
 		<div className="swipeable-container" style={{ ...containerStyle }}>
 			<div {...handlers}>
-				<div className="content-wrapper" ref={parentRef}>
+				<div style={{ display: 'flex', flexDirection: 'row' }}>
 					{StyledChildren}
 					<div
 						className="actions-container"

@@ -1,6 +1,6 @@
 {
   "name": "react-swipe-to-show",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Styled swipeable component using react-swipeable for gesture detection, allowing full customization and styling of swiping component and revealed menu",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
