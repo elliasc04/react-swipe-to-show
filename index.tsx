@@ -67,9 +67,20 @@ const SwipeToShow: React.FC<Props> = ({
 	const parentRef = useRef<HTMLDivElement>(null);
 	const StyledChildren = React.Children.map(children, (child) =>
 		React.cloneElement(child as React.ReactElement, {
-			className: `${(child as React.ReactElement).props.className || ""} content-container rstra-content-container`,
 			style: {
 				...((child as React.ReactElement).props.style || {}),
+				width: "100%",
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "space-between",
+				top: 0,
+				left: 0,
+				transition: "all 0.25s ease",
+				background: "transparent",
+				boxSizing: "border-box",
+				paddingTop: "1rem",
+				paddingBottom: "1rem",
+				zIndex: 1,
 				transform: `translateX(${isExpanded ? `-${swipeDistance}px` : "0px"})`
 			}
 		})
