@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import "./styles.css";
+import "./dist/styles.css";
 
 import React, { CSSProperties, ReactNode, useEffect, useId, useRef, useState } from "react";
 import { useSwipeable } from "react-swipeable";
@@ -13,20 +13,6 @@ type Props = {
 	swipeLength: number;
 };
 
-const StyleInjector: React.FC<{
-	className?: string;
-	style?: React.CSSProperties;
-	children: React.ReactNode;
-}> = ({ className, style, children }) => {
-	const StyledChildren = React.Children.map(children, (child) =>
-		React.cloneElement(child as React.ReactElement, {
-			className: `${(child as React.ReactElement).props.className || ""} ${className || ""} rstra-content-container`,
-			style: { ...((child as React.ReactElement).props.style || {}), ...style }
-		})
-	);
-
-	return <>{StyledChildren}</>;
-};
 
 const SwipeToShow: React.FC<Props> = ({
 	children,
@@ -71,7 +57,6 @@ const SwipeToShow: React.FC<Props> = ({
 			}
 		}
 	}
-	
 	const viewportWidth = window.innerWidth;
 	const viewportHeight = window.innerHeight;
 	const smallerDimension = Math.min(viewportWidth, viewportHeight);
@@ -80,7 +65,15 @@ const SwipeToShow: React.FC<Props> = ({
 
 	const [parentHeight, setParentHeight] = useState<number>(0);
 	const parentRef = useRef<HTMLDivElement>(null);
-
+	const StyledChildren = React.Children.map(children, (child) =>
+		React.cloneElement(child as React.ReactElement, {
+			className: `${(child as React.ReactElement).props.className || ""} content-container rstra-content-container`,
+			style: {
+				...((child as React.ReactElement).props.style || {}),
+				transform: `translateX(${isExpanded ? `-${swipeDistance}px` : "0px"})`
+			}
+		})
+	);
 	useEffect(() => {
 		const updateParentHeight = () => {
 			if (parentRef.current) {
@@ -101,14 +94,7 @@ const SwipeToShow: React.FC<Props> = ({
 		<div className="swipeable-container" style={{ ...containerStyle }}>
 			<div {...handlers}>
 				<div className="content-wrapper" ref={parentRef}>
-					<StyleInjector
-						className="content-container"
-						style={{
-							transform: `translateX(${isExpanded ? `-${swipeDistance}px` : "0px"})`
-						}}
-					>
-						{children}
-					</StyleInjector>
+					{StyledChildren}
 					<div
 						className="actions-container"
 						style={{
