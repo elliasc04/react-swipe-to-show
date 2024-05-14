@@ -12,12 +12,12 @@
 	box-sizing: border-box;
 }
 
-.content-wrapper {
+.swipe-content-wrapper {
     display: flex;
     flex-direction: row;
 }
 
-.actions-container {
+.swipe-actions-container {
 	width: 11%;
 	position: absolute;
 	top: 0;
@@ -35,7 +35,7 @@
     vertical-align: middle;
 }
 
-.content-container {
+.swipe-content-container {
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -50,7 +50,7 @@
 	z-index: 1;
 }
 
-.action-button {
+.swipe-action-button {
 	padding-left: 2rem;
 	padding-right: 1rem;
 	appearance: none;

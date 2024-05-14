@@ -2,44 +2,55 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "./styles.css";
 
-import React, { CSSProperties, ReactNode, useEffect, useId, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 type Props = {
 	children: ReactNode;
-	actionButtons: ReactNode[];
-	containerStyle?: CSSProperties;
+	content: ReactNode;
+	actionButtons?: ReactNode[];
 	onOpen?: () => void;
 	onClose?: () => void;
 	swipeLength: number;
+	viewportMode?: string;
+	contentDistance: number;
 };
-
 
 const SwipeToShow: React.FC<Props> = ({
 	children,
-	actionButtons,
-	containerStyle,
+	content,
 	onOpen,
 	onClose,
-	swipeLength
+	swipeLength,
+	viewportMode,
+	contentDistance
 }: Props) => {
 	const [isScrolling, setIsScrolling] = useState<boolean>(false);
 	const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
 	const handlers = useSwipeable({
 		onSwiped: () => handlePanEnd(),
 		onSwipeStart: (eventData: any) => handlePanStart(eventData),
 		onSwiping: (eventData: any) => handleSwipe(eventData),
 		trackMouse: true
 	});
-	const id = useId();
 
 	function handlePanStart(e: any) {
 		if (e.dir === "Down" || e.dir === "Up") {
 			setIsScrolling(true);
 		}
 	}
-
 	function handlePanEnd() {
 		setIsScrolling(false);
+	}
+
+	const viewportWidth = window.innerWidth;
+	const viewportHeight = window.innerHeight;
+	let useDimension: number;
+	useDimension = Math.min(viewportWidth, viewportHeight);
+	if (viewportMode === "height") {
+		useDimension = viewportHeight;
+	} else if (viewportMode === "width") {
+		useDimension = viewportWidth;
 	}
 
 	function handleSwipe(e: any) {
@@ -57,11 +68,12 @@ const SwipeToShow: React.FC<Props> = ({
 			}
 		}
 	}
-	const viewportWidth = window.innerWidth;
-	const viewportHeight = window.innerHeight;
-	const smallerDimension = Math.min(viewportWidth, viewportHeight);
 
-	const swipeDistance = (smallerDimension * swipeLength) / 100;
+	const swipeDistance = (useDimension * swipeLength) / 100;
+	const travelDistance = (useDimension * contentDistance) / 100;
+
+	const actionEndDistance = -travelDistance;
+	const actionStartDistance = 100 - 0.5 * swipeDistance;
 
 	const [parentHeight, setParentHeight] = useState<number>(0);
 	const parentRef = useRef<HTMLDivElement>(null);
@@ -100,28 +112,32 @@ const SwipeToShow: React.FC<Props> = ({
 			window.removeEventListener("resize", updateParentHeight);
 		};
 	}, [parentRef]);
-
 	return (
-		<div className="swipeable-container" style={{ ...containerStyle }}>
+		<div className="swipeable-container">
 			<div {...handlers}>
-				<div style={{ display: 'flex', flexDirection: 'row' }}>
+				<div style={{ position: "relative" }}>
 					{StyledChildren}
 					<div
-						className="actions-container"
+						className="swipe-actions-container"
 						style={{
 							display: "flex",
+							position: "absolute",
+							top: "0%",
+							left: "100%",
 							height: "100%",
+							width: "100%",
+							paddingTop: "1rem",
+							paddingBottom: "1rem",
+							alignItems: "center",
+							zIndex: 0,
+							justifyContent: "center",
+							verticalAlign: "middle",
 							opacity: isExpanded ? 1 : 0,
-							transform: `translateX(${isExpanded ? 0 : "100%"})`,
+							transform: `translateX(${isExpanded ? `${actionEndDistance.toString()}%` : `-30%`})`,
 							transition: "opacity 0.25s ease, transform 0.25s ease"
 						}}
-						id={id}
 					>
-						{actionButtons.map((action, index) => (
-							<div key={`actionKey_${index}`} className="pl-">
-								<button className="action-button">{action}</button>
-							</div>
-						))}
+						{content}
 					</div>
 				</div>
 			</div>
