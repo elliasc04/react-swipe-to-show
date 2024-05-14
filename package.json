@@ -1,6 +1,6 @@
 {
   "name": "react-swipe-to-show",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Styled swipeable component using react-swipeable for gesture detection, allowing full customization and styling of swiping component and revealed content",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -25,7 +25,7 @@
     "drag"
   ],
   "author": "Ethan Guo",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/elliasc04/react-swipe-to-show/issues"
   },

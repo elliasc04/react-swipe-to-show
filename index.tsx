@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import "./styles.css";
+import './styles.css'
 
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 type Props = {
 	children: ReactNode;
 	content: ReactNode;
-	actionButtons?: ReactNode[];
 	onOpen?: () => void;
 	onClose?: () => void;
 	swipeLength: number;
 	viewportMode?: string;
-	contentDistance: number;
+	contentEndDistance: number;
+	contentStartDistance?: number;
 };
 
 const SwipeToShow: React.FC<Props> = ({
@@ -22,7 +22,8 @@ const SwipeToShow: React.FC<Props> = ({
 	onClose,
 	swipeLength,
 	viewportMode,
-	contentDistance
+	contentEndDistance,
+	contentStartDistance
 }: Props) => {
 	const [isScrolling, setIsScrolling] = useState<boolean>(false);
 	const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -70,13 +71,15 @@ const SwipeToShow: React.FC<Props> = ({
 	}
 
 	const swipeDistance = (useDimension * swipeLength) / 100;
-	const travelDistance = (useDimension * contentDistance) / 100;
-
+	const travelDistance = (useDimension * contentEndDistance) / 100;
+	let startDistance: number;
+	if (contentStartDistance != undefined) {
+		startDistance = -contentStartDistance;
+	} else {
+		startDistance = -30;
+	}
 	const actionEndDistance = -travelDistance;
-	const actionStartDistance = 100 - 0.5 * swipeDistance;
 
-	const [parentHeight, setParentHeight] = useState<number>(0);
-	const parentRef = useRef<HTMLDivElement>(null);
 	const StyledChildren = React.Children.map(children, (child) =>
 		React.cloneElement(child as React.ReactElement, {
 			style: {
@@ -97,25 +100,10 @@ const SwipeToShow: React.FC<Props> = ({
 			}
 		})
 	);
-	useEffect(() => {
-		const updateParentHeight = () => {
-			if (parentRef.current) {
-				setParentHeight(parentRef.current.clientHeight);
-			}
-		};
-
-		updateParentHeight();
-
-		window.addEventListener("resize", updateParentHeight);
-
-		return () => {
-			window.removeEventListener("resize", updateParentHeight);
-		};
-	}, [parentRef]);
 	return (
 		<div className="swipeable-container">
 			<div {...handlers}>
-				<div style={{ position: "relative" }}>
+				<div style={{ position: "relative", zIndex: 0 }}>
 					{StyledChildren}
 					<div
 						className="swipe-actions-container"
@@ -129,11 +117,11 @@ const SwipeToShow: React.FC<Props> = ({
 							paddingTop: "1rem",
 							paddingBottom: "1rem",
 							alignItems: "center",
-							zIndex: 0,
+							zIndex: -1,
 							justifyContent: "center",
 							verticalAlign: "middle",
 							opacity: isExpanded ? 1 : 0,
-							transform: `translateX(${isExpanded ? `${actionEndDistance.toString()}%` : `-30%`})`,
+							transform: `translateX(${isExpanded ? `${actionEndDistance.toString()}%` : `${startDistance.toString()}%`})`,
 							transition: "opacity 0.25s ease, transform 0.25s ease"
 						}}
 					>
