@@ -1,99 +1,172 @@
-<h1 align="center">react-swipe-to-show</h1>
+
+<h1  align="center">react-swipe-to-show</h1>
+
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.1.1-blue.svg?cacheSeconds=2592000" />
-  <a href="https://github.com/nicklassvendsrud/react-swipe-to-reveal-actions#readme" target="_blank">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
-  </a>
-  <a href="https://github.com/nicklassvendsrud/react-swipe-to-reveal-actions/graphs/commit-activity" target="_blank">
-    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
-  </a>
-  <a href="https://github.com/nicklassvendsrud/react-swipe-to-reveal-actions/blob/main/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
-  </a>
+
+<img  alt="Version"  src="https://img.shields.io/badge/version-1.1.3-blue.svg?cacheSeconds=2592000"  />
+
+<a  href="https://github.com/elliasc04/react-swipe-to-show#readme"  target="_blank">
+
+<img  alt="Documentation"  src="https://img.shields.io/badge/documentation-yes-brightgreen.svg"  />
+
+</a>
+
+<a  href="https://github.com/elliasc04/react-swipe-to-show/graphs/commit-activity"  target="_blank">
+
+<img  alt="Maintenance"  src="https://img.shields.io/badge/Maintained%3F-yes-green.svg"  />
+
+</a>
+
+<a  href="https://github.com/elliasc04/react-swipe-to-show/blob/main/LICENSE"  target="_blank">
+
+<img  alt="License: MIT"  src="https://img.shields.io/badge/License-ISC-yellow.svg"  />
+
+</a>
+
 </p>
 
-> A swipeable (list) item component that can reveal a set of actions - iOS style. Uses [react-swipeable](https://github.com/FormidableLabs/react-swipeable) for gesture detection.
+  
 
-### 🏠 [Homepage](https://github.com/nicklassvendsrud/react-swipe-to-reveal-actions#readme)
+> Zero-styled swipeable component using react-swipeable for gesture detection, allowing full customization and styling of swiping component and revealed content.
 
-![Demo-gif](src/example/rstra_gif.gif)
+  
+
+### 🏠 [Homepage](https://github.com/elliasc04/react-swipe-to-show)
+
+
+  
 
 ## Install
 
+  
+
 ```sh
-yarn add react-swipe-to-reveal-actions
+
+npm i react-swipe-to-show
+
 ```
+
+  
 
 ## Usage (see /example directory for more)
 
-```js
-import SwipeToRevealActions from "react-swipe-to-reveal-actions";
+  
 
-export default const MyListItem = () => {
-    return (
-        <SwipeToRevealActions
-            actionButtons={[
-                {
-                    content: (
-                        <div className="your-className-here">
-                            <span>EDIT</span>
-                        </div>
-                    ),
-                    onClick: () => alert('Pressed the EDIT button'),
-                },
-                {
-                    content: (
-                        <div className="your-className-here">
-                            <span>DELETE</span>
-                        </div>
-                    ),
-                    onClick: () => alert('Pressed the DELETe button'),
-                },
-            ]}
-            actionButtonMinWidth={70}
-        >
-            Swipe me to reveal actions
-        </SwipeToRevealActions>
-    );
+```js
+import SwipeToShow from "react-swipe-to-show";
+
+import { AccordionInfo } from "./accordion";
+
+export interface ItemRow {
+	item: string;
+	id: string;
+}
+
+interface TableProps {
+	rows: any;
+	deleteRow: (index: string) => void;
+	editRow: (index: string | null) => void;
+}
+
+export const AccordionTable: React.FC<TableProps> = ({ rows, deleteRow, editRow }) => {
+	const Buttons = ({ currentRow }: { currentRow: ItemRow }) => {
+		return (
+			<div className="flex flex-row">
+				<PencilSquareIcon
+					key="pencil"
+					className="h-6 w-6"
+					aria-hidden="true"
+					onClick={() => editRow(currentRow.id)}
+				/>
+				<div className="w-10"></div>
+				<TrashIcon
+					key="trash"
+					className="h-6 w-6"
+					aria-hidden="true"
+					onClick={() => deleteRow(currentRow.id)}
+				/>
+			</div>
+		);
+	};
+	return (
+		<div className="flex flex-col">
+			{rows.map((row: ItemRow) => {
+				return (
+					<div key={row.id} className="flex-row">
+						<SwipeToShow
+							content={<Buttons currentRow={row}></Buttons>}
+							swipeLength={20}
+							contentEndDistance={6.5}
+							contentStartDistance={30}
+						>
+							<AccordionInfo name={row.item}></AccordionInfo>
+						</SwipeToShow>
+					</div>
+				);
+			})}
+		</div>
+	);
 };
+
 ```
+
+  
 
 ### Props
 
+  
+  
 
 **Required props are marked with `*`.**
 
-| Name         | Type     | Default | Description                                                                        |
+  
+
+| Name | Type | Default | Description |
 | ------------ | -------- | ------- | ---------------------------------------------------------------------------------- |
-| `children`\*   | `React.ReactNode`   | `-`     | The content of the item itself                                                   |
-| `actionButtons`\*  | `{ content: React.ReactNode \ Element; onClick: () => void; role?: string; }[]`   | `-`     | An array objects with the contents and onClicks for each action button |
-| `actionButtonMinWidth`\* | `number`   | `-`     | The minimum width of each action button (px)                                                   |
-| `height`      | `string`   | `56px`     | The height of the item. Can be px, rem or em - that's why this is a string                               |
-| `containerStyle`     | `React.CSSProperties`   | `-`     | Optional styles for the item container                    |
-| `onOpen`       | `() => void` | `-`     | Callback when item is expanded by swipe or click                                       |
-| `onClose`       | `() => void` | `-`     | Callback when item is collapsed by swipe or click                                       |
-| `hideDotsButton`       | `boolean` | `-`     | Hides the three dots that can be clicked to expand the item                                      |
-| `dotsBtnAriaLabel`       | `string` | `Click to reveal actions`     | a11y label text for the dots button                                      |
+| `children` | `React.ReactNode` | `-` | Swipeable content trigger for component |
+| `content` | `React.ReactNode` | `-` | Revealed content for component. Wider contents can result in undesired behavior |
+| `viewportMode` | `string` | `optimized` | Choice for desired viewport to be used in swiping distance calculation. `optimized` elects to use smaller viewport between height and width, `height` elects to use height, and `width` uses width |
+| `swipeLength`\* | `number` | `-` | Length as percent of desired viewport dimension |
+| `contentEndDistance`\* | `number` | `-` | End distance of revealed content |
+| `contentStartDistance` | `number` | `30` | Start distance of revealed content |
+| `onOpen` | `() => void` | `-` | Function called when item is opened |
+| `onClose` | `() => void` | `-` | Function called when item is closed |
+
+  
 
 ## Author
 
-👤 **Nicklas Svendsrud**
+  
 
-* Github: [@nicklassvendsrud](https://github.com/nicklassvendsrud)
-* LinkedIn: [@nicklassvendsrud](https://linkedin.com/in/nicklassvendsrud)
+👤 **Ethan Guo**
+
+  
+
+* Github: [@elliasc04](https://github.com/elliasc04)
+
+* LinkedIn: [@elliasc04](https://www.linkedin.com/in/ethanguo/)
+
+  
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/nicklassvendsrud/react-swipe-to-reveal-actions/issues). You can also take a look at the [contributing guide](https://github.com/nicklassvendsrud/react-swipe-to-reveal-actions/blob/master/CONTRIBUTING.md).
+  
+
+Contributions, issues and feature requests are welcome!<br  />Feel free to check [issues page](https://github.com/elliasc04/react-swipe-to-show/issues).
+  
 
 ## Show your support
 
+
+
 Give a ⭐️ if this project helped you!
+
+  
 
 ## 📝 License
 
-Copyright © 2021 [Nicklas Svendsrud](https://github.com/nicklassvendsrud).<br />
-This project is [MIT](https://github.com/nicklassvendsrud/react-swipe-to-reveal-actions/blob/master/LICENSE) licensed.
+  
 
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+Copyright © 2024 [Ethan guo](https://github.com/elliasc04).<br  />
+
+This project is [MIT](https://github.com/elliasc04/react-swipe-to-show/blob/main/LICENSE) licensed.
