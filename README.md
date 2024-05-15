@@ -48,7 +48,7 @@ npm i react-swipe-to-show
 
   
 
-## Usage (see /example directory for more)
+## Usage Example
 
   
 
