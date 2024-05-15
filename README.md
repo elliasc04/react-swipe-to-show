@@ -3,7 +3,7 @@
 
 <p>
 
-<img  alt="Version"  src="https://img.shields.io/badge/version-1.1.3-blue.svg?cacheSeconds=2592000"  />
+<img  alt="Version"  src="https://img.shields.io/badge/version-1.1.7-blue.svg?cacheSeconds=2592000"  />
 
 <a  href="https://github.com/elliasc04/react-swipe-to-show#readme"  target="_blank">
 
@@ -31,9 +31,9 @@
 
   
 
-### 🏠 [Homepage](https://github.com/elliasc04/react-swipe-to-show)
+### [Homepage](https://github.com/elliasc04/react-swipe-to-show)
 
-
+![Demo-gif](example_gif.gif)
   
 
 ## Install
@@ -97,9 +97,9 @@ export const AccordionTable: React.FC<TableProps> = ({ rows, deleteRow, editRow 
 							content={<Buttons currentRow={row}></Buttons>}
 							swipeLength={20}
 							contentEndDistance={6.5}
-							contentStartDistance={30}
+							contentStartDistance={0}
 						>
-							<AccordionInfo name={row.item}></AccordionInfo>
+							<AccordionInfo name={row.item}>Hello World!</AccordionInfo>
 						</SwipeToShow>
 					</div>
 				);
@@ -123,12 +123,12 @@ export const AccordionTable: React.FC<TableProps> = ({ rows, deleteRow, editRow 
 
 | Name | Type | Default | Description |
 | ------------ | -------- | ------- | ---------------------------------------------------------------------------------- |
-| `children` | `React.ReactNode` | `-` | Swipeable content trigger for component |
-| `content` | `React.ReactNode` | `-` | Revealed content for component. Wider contents can result in undesired behavior |
-| `viewportMode` | `string` | `optimized` | Choice for desired viewport to be used in swiping distance calculation. `optimized` elects to use smaller viewport between height and width, `height` elects to use height, and `width` uses width |
+| `children`\* | `React.ReactNode` | `-` | Swipeable content trigger for component |
+| `content`\* | `React.ReactNode` | `-` | Revealed content for component. Wider contents can result in undesired behavior |
+| `viewportMode` | `string` | `optimized` | Choice for desired viewport to be used in swiping distance calculation. `optimized` elects to use smaller viewport between height and width, `height` uses viewport height, and `width` uses viewport width |
 | `swipeLength`\* | `number` | `-` | Length as percent of desired viewport dimension |
 | `contentEndDistance`\* | `number` | `-` | End distance of revealed content |
-| `contentStartDistance` | `number` | `30` | Start distance of revealed content |
+| `contentStartDistance` | `number` | `0` | Start distance of revealed content |
 | `onOpen` | `() => void` | `-` | Function called when item is opened |
 | `onClose` | `() => void` | `-` | Function called when item is closed |
 
@@ -138,7 +138,7 @@ export const AccordionTable: React.FC<TableProps> = ({ rows, deleteRow, editRow 
 
   
 
-👤 **Ethan Guo**
+**Ethan Guo**
 
   
 
@@ -148,7 +148,7 @@ export const AccordionTable: React.FC<TableProps> = ({ rows, deleteRow, editRow 
 
   
 
-## 🤝 Contributing
+## Contributing
 
   
 
@@ -163,7 +163,7 @@ Give a ⭐️ if this project helped you!
 
   
 
-## 📝 License
+## License
 
   
 

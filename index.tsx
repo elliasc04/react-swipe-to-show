@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import './styles.css'
 
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 type Props = {
 	children: ReactNode;
@@ -74,7 +74,7 @@ const SwipeToShow: React.FC<Props> = ({
 	const travelDistance = (useDimension * contentEndDistance) / 100;
 	let startDistance: number;
 	if (contentStartDistance != undefined) {
-		startDistance = -contentStartDistance;
+		startDistance = contentStartDistance - 30;
 	} else {
 		startDistance = -30;
 	}
