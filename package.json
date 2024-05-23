@@ -1,6 +1,6 @@
 {
   "name": "react-swipe-to-show",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Zero-styled swipeable component using react-swipeable for gesture detection, allowing full customization and styling of swiping component and revealed content.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -35,7 +35,6 @@
   },
   "homepage": "https://github.com/elliasc04/react-swipe-to-show#readme",
   "dependencies": {
-    "@changesets/cli": "^2.27.1",
     "react-swipeable": "^7.0.1",
     "tsup": "^8.0.2"
   },

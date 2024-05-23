@@ -3,7 +3,7 @@
 
 <p>
 
-<img  alt="Version"  src="https://img.shields.io/badge/version-1.1.7-blue.svg?cacheSeconds=2592000"  />
+<img  alt="Version"  src="https://img.shields.io/badge/version-1.1.8-blue.svg?cacheSeconds=2592000"  />
 
 <a  href="https://github.com/elliasc04/react-swipe-to-show#readme"  target="_blank">
 
@@ -19,7 +19,7 @@
 
 <a  href="https://github.com/elliasc04/react-swipe-to-show/blob/main/LICENSE"  target="_blank">
 
-<img  alt="License: MIT"  src="https://img.shields.io/badge/License-ISC-yellow.svg"  />
+<img  alt="License: MIT"  src="https://img.shields.io/badge/License-MIT-yellow.svg"  />
 
 </a>
 
