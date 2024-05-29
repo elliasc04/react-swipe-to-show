@@ -1,9 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import './styles.css'
-
-import React, { ReactNode, useState } from "react";
-import { useSwipeable } from "react-swipeable";
+import React, { ReactNode, useEffect, useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 type Props = {
 	children: ReactNode;
 	content: ReactNode;
@@ -23,7 +19,7 @@ const SwipeToShow: React.FC<Props> = ({
 	swipeLength,
 	viewportMode,
 	contentEndDistance,
-	contentStartDistance
+	contentStartDistance,
 }: Props) => {
 	const [isScrolling, setIsScrolling] = useState<boolean>(false);
 	const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -32,36 +28,48 @@ const SwipeToShow: React.FC<Props> = ({
 		onSwiped: () => handlePanEnd(),
 		onSwipeStart: (eventData: any) => handlePanStart(eventData),
 		onSwiping: (eventData: any) => handleSwipe(eventData),
-		trackMouse: true
+		trackMouse: true,
 	});
 
 	function handlePanStart(e: any) {
-		if (e.dir === "Down" || e.dir === "Up") {
+		if (e.dir === 'Down' || e.dir === 'Up') {
 			setIsScrolling(true);
 		}
 	}
 	function handlePanEnd() {
 		setIsScrolling(false);
 	}
+	const [useDimension, setUseDimension] = useState(0);
 
-	const viewportWidth = window.innerWidth;
-	const viewportHeight = window.innerHeight;
-	let useDimension: number;
-	useDimension = Math.min(viewportWidth, viewportHeight);
-	if (viewportMode === "height") {
-		useDimension = viewportHeight;
-	} else if (viewportMode === "width") {
-		useDimension = viewportWidth;
-	}
+	useEffect(() => {
+		const updateDimensions = () => {
+			const viewportWidth = window.innerWidth;
+			const viewportHeight = window.innerHeight;
+			let dimension = Math.min(viewportWidth, viewportHeight);
+
+			if (viewportMode === 'height') {
+				dimension = viewportHeight;
+			} else if (viewportMode === 'width') {
+				dimension = viewportWidth;
+			}
+
+			setUseDimension(dimension);
+		};
+		updateDimensions();
+		window.addEventListener('resize', updateDimensions);
+		return () => {
+			window.removeEventListener('resize', updateDimensions);
+		};
+	}, [viewportMode]);
 
 	function handleSwipe(e: any) {
 		if (!isScrolling) {
-			if (e.dir === "Left" && !isExpanded) {
+			if (e.dir === 'Left' && !isExpanded) {
 				setIsExpanded(true);
 				if (onOpen) {
 					onOpen();
 				}
-			} else if (e.dir === "Right" && isExpanded) {
+			} else if (e.dir === 'Right' && isExpanded) {
 				setIsExpanded(false);
 				if (onClose) {
 					onClose();
@@ -84,45 +92,42 @@ const SwipeToShow: React.FC<Props> = ({
 		React.cloneElement(child as React.ReactElement, {
 			style: {
 				...((child as React.ReactElement).props.style || {}),
-				width: "100%",
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "space-between",
+				display: 'flex',
+				alignItems: 'center',
 				top: 0,
 				left: 0,
-				transition: "all 0.25s ease",
-				background: "transparent",
-				boxSizing: "border-box",
-				paddingTop: "1rem",
-				paddingBottom: "1rem",
+				transition: 'all 0.25s ease',
+				boxSizing: 'border-box',
+				paddingTop: '1rem',
+				paddingBottom: '1rem',
 				zIndex: 1,
-				transform: `translateX(${isExpanded ? `-${swipeDistance}px` : "0px"})`
-			}
-		})
+				transform: `translateX(${isExpanded ? `-${swipeDistance}px` : '0px'})`,
+			},
+		}),
 	);
 	return (
 		<div className="swipeable-container">
 			<div {...handlers}>
-				<div style={{ position: "relative", zIndex: 0 }}>
+				<div style={{ position: 'relative', zIndex: 0 }}>
 					{StyledChildren}
 					<div
 						className="swipe-actions-container"
 						style={{
-							display: "flex",
-							position: "absolute",
-							top: "0%",
-							left: "100%",
-							height: "100%",
-							width: "100%",
-							paddingTop: "1rem",
-							paddingBottom: "1rem",
-							alignItems: "center",
+							display: 'flex',
+							position: 'absolute',
+							top: '0%',
+							left: '100%',
+							height: '100%',
+							width: '100%',
+							paddingTop: '1rem',
+							paddingBottom: '1rem',
+							alignItems: 'center',
 							zIndex: -1,
-							justifyContent: "center",
-							verticalAlign: "middle",
+							justifyContent: 'center',
+							verticalAlign: 'middle',
 							opacity: isExpanded ? 1 : 0,
 							transform: `translateX(${isExpanded ? `${actionEndDistance.toString()}%` : `${startDistance.toString()}%`})`,
-							transition: "opacity 0.25s ease, transform 0.25s ease"
+							transition: 'opacity 0.25s ease, transform 0.25s ease',
 						}}
 					>
 						{content}

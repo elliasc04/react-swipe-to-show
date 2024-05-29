@@ -3,7 +3,7 @@
 
 <p>
 
-<img  alt="Version"  src="https://img.shields.io/badge/version-1.1.8-blue.svg?cacheSeconds=2592000"  />
+<img  alt="Version"  src="https://img.shields.io/badge/version-1.2.0-blue.svg?cacheSeconds=2592000"  />
 
 <a  href="https://github.com/elliasc04/react-swipe-to-show#readme"  target="_blank">
 
