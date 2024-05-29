@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 type Props = {
