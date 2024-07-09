@@ -3,7 +3,7 @@
 
 <p>
 
-<img  alt="Version"  src="https://img.shields.io/badge/version-1.2.1-blue.svg?cacheSeconds=2592000"  />
+<img  alt="Version"  src="https://img.shields.io/badge/version-1.2.4-blue.svg?cacheSeconds=2592000"  />
 
 <a  href="https://github.com/elliasc04/react-swipe-to-show#readme"  target="_blank">
 
@@ -27,7 +27,7 @@
 
   
 
-> Zero-styled swipeable component using react-swipeable for gesture detection, allowing full customization and styling of swiping component and revealed content.
+> Zero-styled swipeable component using react-swipeable for gesture detection compatible with Next.js, allowing full customization and styling of swiping component and revealed content.
 
   
 
